@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState, createContext } from "react";
+import Title from "./components/Title/Title.css";
+import Cards from "./components/Cards/Cards";
+//styles
+import GlobalStyles from "./GlobalStyles";
+export const AppContext = createContext();
+const URL = "https://rickandmortyapi.com/api/character/1,2,3,4,5,6,7,8,9,10";
 
-function App() {
+const App = () => {
+  const [characters, setCharacters] = useState([]);
+  const [remaining, setRemaining] = useState([]);
+  const [previous, setPrevious] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const getCharacters = async () => {
+    const res = await fetch(URL);
+    const chars = await res.json();
+    setCharacters([...chars, ...chars]);
+    setRemaining([...chars, ...chars]);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getCharacters();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider
+      value={{
+        characters,
+        remaining,
+        setRemaining,
+        previous,
+        setPrevious,
+        loading,
+      }}
+    >
+      <div>
+        <GlobalStyles />
+        <Title />
+
+        <Cards />
+      </div>
+    </AppContext.Provider>
   );
-}
+};
 
 export default App;
