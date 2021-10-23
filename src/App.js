@@ -15,8 +15,11 @@ const App = () => {
   const getCharacters = async () => {
     const res = await fetch(URL);
     const chars = await res.json();
-    setCharacters([...chars, ...chars]);
-    setRemaining([...chars, ...chars]);
+    const shuffle1 = chars.sort(() => 0.5 - Math.random());
+    const shuffle2 = chars.sort(() => 0.5 - Math.random());
+
+    setCharacters([...shuffle2, ...shuffle1]);
+    setRemaining([...shuffle2, ...shuffle1]);
     setLoading(false);
   };
 
