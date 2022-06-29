@@ -4,34 +4,36 @@ import styled from "styled-components";
 import { AppContext } from "../../App";
 import { isAlreadyFlipped } from "../../utils";
 
-const Card = ({ className, id, index, image }) => {
-  const { characters, remaining, setRemaining, previous, setPrevious } =
-    useContext(AppContext);
-  const handleClick = (e) => {
-    const target = characters[index];
-    if (previous == null && !isAlreadyFlipped(target.id, remaining)) {
+const Card = ({ className, id, index }) => {
+  const { characters, remaining, setRemaining, previous, setPrevious, waiting, setWaiting } = useContext(AppContext);
+  const flipCard = (e) => {
+    if (waiting) return;
+    const cur = characters[index];
+    if (previous == null && !isAlreadyFlipped(cur.id, remaining)) {
       //case: first card flipped
-      setPrevious({ index, id, target: e.target, image });
-      e.target.src = target.image;
-    } else if (previous.id === target.id && previous.index !== index) {
+      setPrevious({ index, id, target: e.target });
+      e.target.src = cur.image;
+    } else if (previous.id === cur.id && previous.index !== index) {
       //case: correct card flipped
-      e.target.src = target.image;
-      const newRemaining = remaining.filter((char) => char.id !== target.id);
+      e.target.src = cur.image;
+      const newRemaining = remaining.filter((char) => char.id !== cur.id);
       setRemaining(newRemaining);
       setPrevious(null);
-    } else if (previous.id !== target.id && previous.index !== index) {
+    } else if (previous.id !== cur.id && previous.index !== index) {
       //case: wrong card flipped
-      e.target.src = target.image;
+      e.target.src = cur.image;
       setPrevious(null);
+      setWaiting(true);
       setTimeout(() => {
         e.target.src = hideenImage;
         previous.target.src = hideenImage;
+        setWaiting(false);
       }, 1300);
     }
   };
   return (
     <div className={className}>
-      <img onClick={(e) => handleClick(e, id)} src={hideenImage} alt="" />
+      <img onClick={(e) => flipCard(e, id)} src={hideenImage} alt="" />
     </div>
   );
 };
