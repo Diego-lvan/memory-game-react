@@ -6,14 +6,12 @@ import { AppContext } from "./../../App";
 const Cards = ({ className }) => {
   const { characters, loading } = useContext(AppContext);
   if (loading) {
-    return (
-      <h1 style={{ textAlign: "center", fontSize: "25px" }}>Loading...</h1>
-    );
+    return <h1 style={{ textAlign: "center", fontSize: "25px" }}>Loading...</h1>;
   }
   return (
     <div className={className}>
       {characters.map((char, i) => {
-        return <Card {...char} index={i} key={char.id} />;
+        return <Card id={char.id} index={i} />;
       })}
     </div>
   );
