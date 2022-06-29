@@ -10,6 +10,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [moves, setMoves] = useState(0);
   const [seconds, setSeconds] = useState(1);
+  const [intervalID, setIntervalID] = useState(false);
 
   return (
     <AppContext.Provider
@@ -20,6 +21,8 @@ const App = () => {
         setMoves,
         seconds,
         setSeconds,
+        intervalID,
+        setIntervalID,
       }}
     >
       <div>
