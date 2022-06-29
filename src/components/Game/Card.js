@@ -2,19 +2,17 @@ import React, { useContext } from "react";
 import hideenImage from "./../../assets/images/card.jpg";
 import styled from "styled-components";
 import { isAlreadyFlipped } from "../../utils/isAlreadyFlipped";
-import Swal from "sweetalert2";
-import secondsToTime from "../../utils/secondsToTime";
 import { AppContext } from "../../App";
 
 const Card = ({ className, id, index, characters, remaining, setRemaining, previous, setPrevious, waiting, setWaiting }) => {
-  let { moves, seconds, setSeconds, setMoves } = useContext(AppContext);
+  let { moves, seconds, setSeconds, setMoves, setIntervalID } = useContext(AppContext);
   const flipCard = (e) => {
     const cur = characters[index];
     const inRemaining = remaining.includes(cur);
     if (waiting || inRemaining === false) return;
     if (previous?.index !== index) setMoves(++moves);
     if (moves === 1) {
-      setInterval(() => setSeconds(++seconds), 1000);
+      setIntervalID(setInterval(() => setSeconds(++seconds), 1000));
     }
 
     if (previous == null && !isAlreadyFlipped(cur.id, remaining)) {
@@ -40,10 +38,6 @@ const Card = ({ className, id, index, characters, remaining, setRemaining, previ
     }
   };
 
-  if (remaining.length === 0) {
-    const time = secondsToTime(seconds);
-    Swal.fire("You won!", time, "success");
-  }
   return (
     <div className={className}>
       <img onClick={(e) => flipCard(e, id)} src={hideenImage} alt="" />

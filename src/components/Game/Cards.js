@@ -3,6 +3,8 @@ import Card from "./Card";
 import styled from "styled-components";
 import axios from "axios";
 import { AppContext } from "../../App";
+import secondsToTime from "../../utils/secondsToTime";
+import Swal from "sweetalert2";
 
 const URL = "https://rickandmortyapi.com/api/character/1,2,3,4,5,6,7,8,9,10";
 
@@ -12,7 +14,7 @@ const Cards = ({ className }) => {
   const [previous, setPrevious] = useState(null);
   const [waiting, setWaiting] = useState(false);
 
-  const { loading, setLoading } = useContext(AppContext);
+  const { loading, setLoading, seconds, moves, intervalID } = useContext(AppContext);
 
   const getCharacters = async () => {
     const res = await axios.get(URL);
@@ -29,6 +31,16 @@ const Cards = ({ className }) => {
     getCharacters();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (remaining.length === 0 && !loading) {
+      const time = secondsToTime(seconds - 1);
+      const text = `Time: ${time} \n Moves: ${moves}`;
+      Swal.fire("You won!", text, "success");
+      clearInterval(intervalID);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [remaining]);
 
   if (loading) {
     return <h1 style={{ textAlign: "center", fontSize: "25px" }}>Loading...</h1>;
