@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import hideenImage from "./../../assets/images/card.jpg";
 import styled from "styled-components";
-import { AppContext } from "../../App";
 import { isAlreadyFlipped } from "../../utils";
 
-const Card = ({ className, id, index }) => {
-  const { characters, remaining, setRemaining, previous, setPrevious, waiting, setWaiting } = useContext(AppContext);
+const Card = ({ className, id, index, characters, remaining, setRemaining, previous, setPrevious, waiting, setWaiting }) => {
   const flipCard = (e) => {
     if (waiting) return;
     const cur = characters[index];
