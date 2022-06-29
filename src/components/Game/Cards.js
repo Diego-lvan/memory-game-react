@@ -72,7 +72,7 @@ const CardsStyled = styled(Cards)`
   display: grid;
   grid-template-columns: repeat(4, 90px);
   width: 100%;
-  margin: 0 10px 20px 10px;
+  margin: 0 10px 8px 10px;
   justify-content: center;
   gap: 3px;
 `;

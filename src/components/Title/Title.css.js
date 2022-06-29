@@ -1,7 +1,7 @@
 import Title from "./Title";
 import styled from "styled-components";
 const TitleStyled = styled(Title)`
-  width: 300px;
+  width: 270px;
   margin: -80px auto;
   img {
     display: block;
