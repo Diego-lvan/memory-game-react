@@ -12,6 +12,7 @@ const App = () => {
   const [remaining, setRemaining] = useState([]);
   const [previous, setPrevious] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [waiting, setWaiting] = useState(false);
 
   const getCharacters = async () => {
     const res = await axios.get(URL);
@@ -37,6 +38,8 @@ const App = () => {
         previous,
         setPrevious,
         loading,
+        waiting,
+        setWaiting,
       }}
     >
       <div>
