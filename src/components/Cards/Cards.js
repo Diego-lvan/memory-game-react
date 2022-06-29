@@ -3,6 +3,7 @@ import Card from "./Card";
 import styled from "styled-components";
 import axios from "axios";
 import { AppContext } from "../../App";
+import secondsToTime from "../../utils/secondsToTime";
 
 const URL = "https://rickandmortyapi.com/api/character/1,2,3,4,5,6,7,8,9,10";
 
@@ -11,6 +12,8 @@ const Cards = ({ className }) => {
   const [remaining, setRemaining] = useState([]);
   const [previous, setPrevious] = useState(null);
   const [waiting, setWaiting] = useState(false);
+  const [moves, setMoves] = useState(0);
+  const [seconds, setSeconds] = useState(1);
 
   const { loading, setLoading } = useContext(AppContext);
 
@@ -46,9 +49,15 @@ const Cards = ({ className }) => {
             setPrevious={setPrevious}
             waiting={waiting}
             setWaiting={setWaiting}
+            moves={moves}
+            setMoves={setMoves}
+            seconds={seconds}
+            setSeconds={setSeconds}
           />
         );
       })}
+      <h2>{secondsToTime(seconds - 1)}</h2>
+      <h2>{moves}</h2>
     </div>
   );
 };
