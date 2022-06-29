@@ -5,8 +5,12 @@ import { isAlreadyFlipped } from "../../utils";
 
 const Card = ({ className, id, index, characters, remaining, setRemaining, previous, setPrevious, waiting, setWaiting }) => {
   const flipCard = (e) => {
-    if (waiting) return;
     const cur = characters[index];
+    const inRemaining = remaining.includes(cur);
+    if (waiting || inRemaining === false) return;
+
+    console.log(remaining);
+
     if (previous == null && !isAlreadyFlipped(cur.id, remaining)) {
       //case: first card flipped
       setPrevious({ index, id, target: e.target });
