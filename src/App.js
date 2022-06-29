@@ -1,6 +1,7 @@
 import React, { useEffect, useState, createContext } from "react";
 import Title from "./components/Title/Title.css";
 import Cards from "./components/Cards/Cards";
+import axios from "axios";
 //styles
 import GlobalStyles from "./GlobalStyles";
 export const AppContext = createContext();
@@ -13,8 +14,8 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   const getCharacters = async () => {
-    const res = await fetch(URL);
-    const chars = await res.json();
+    const res = await axios.get(URL);
+    const chars = res.data;
     const shuffle1 = chars.sort(() => 0.5 - Math.random());
     const shuffle2 = chars.sort(() => 0.5 - Math.random());
 
