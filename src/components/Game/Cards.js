@@ -51,6 +51,7 @@ const Cards = ({ className }) => {
         {characters.map((char, i) => {
           return (
             <Card
+              key={i}
               id={char.id}
               index={i}
               characters={characters}
